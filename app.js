@@ -265,46 +265,63 @@ var dataObject = {
 	}
 };
 
-/*  Remove this from your final submission
-function printAllToConsole(dataObj){
-	for (var key in dataObj) {
-		if (dataObj.hasOwnProperty(key)) {
-			console.log(key + " -> " + JSON.stringify(dataObj[key]));
-		}
-	}
+function gatherSearchInfo(array){
+    var typeOfSearch = prompt("What Type of Search would you like to run? A direct search by Name? (Type Name) or A filtered search by trait, age and Occupation? (Type Filter)");
+    switch (typeOfSearch){
+        case "Name":
+            var inputFirstName = prompt("What is the First Name of the individual you are searching for? (Name is Case Sensitive)");
+            var inputLastName = prompt("What is the Last Name Of the Individual you are searching for?(Name is Case Sensitive)");
+			var result = getPersonInfo(inputFirstName, inputLastName, array);
+            return result;
+            break;
+        case "Filter":
+            var inputAge = prompt("What Age Would you like to search for?");
+            var inputEyeColor = prompt("What EyeColor are you searching for?(EyeColor is Lowercase)");
+            var inputOccupation = prompt("What Occupation are you searching for?(Occupation is Lowercase)");
+            // then pass that info to the respective function.
+            return result;
+            break;
+        default:
+            gatherSearchInfo();
+            break;
+            
+    }
 }
-printAllToConsole(dataObject);
-*/
 
 function initSearch(){
 	alert("Hello World");
-
-	// get all the information you need to run the search
-	var yourName = prompt("Who do you want to search for?");
-
-	// then pass that info to the respective function.
-	var result = getPersonInfo("J", "T")
-
-	// once the search is done, pass the results to the responder function
-	responder(result);
+	var array = makeArray();
+	gatherSearchInfo(array);
+	
 }
 
-function responder(results){
-	// results may be a list of strings, an object, or a single string. 
-	alert(results);
-}
-
-function getPersonInfo(firstname, lastname){
-	var result = "This will be the information for whoever you searched for";
-	// look up person's information
+function getPersonInfo(inputFirstName, inputLastName, array){
+	
+var firstNameArray = array.filter(checkFirstName);
+	var result = firstNameArray.filter(checkLastName);
+	alert(result.toString());
 	return result;
+
+	function checkFirstName(object){
+	return object.firstName == inputFirstName ;
 }
 
-function getFamily(){
-	// return list of names of immediate family members
+function checkLastName(object){
+	return object.lastName == inputLastName;
+}
 }
 
-// there will be much more here, and some of the code above will certainly change
+function makeArray(){
+
+var firstArray = [];
+
+Object.keys(dataObject).map(function(id, index){
+	firstArray[index] = id;
+	firstArray[index] = dataObject[id];
+});
+
+return firstArray;
+
+}
 
 initSearch();
-window.close(); // exit window as the end of the session -- you may remove this
