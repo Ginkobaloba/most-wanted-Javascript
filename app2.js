@@ -271,15 +271,15 @@ function gatherSearchInfo(array){
         case "Name":
             var inputFirstName = prompt("What is the First Name of the individual you are searching for? (Name is Case Sensitive)");
             var inputLastName = prompt("What is the Last Name Of the Individual you are searching for?(Name is Case Sensitive)");
-			var result = getPersonInfo(inputFirstName, inputLastName, array);
-            return result;
+			var personResult = getPersonInfo(inputFirstName, inputLastName, array);
+            return personResult;
             break;
         case "Filter":
             var inputAge = prompt("What Age Would you like to search for?");
             var inputEyeColor = prompt("What EyeColor are you searching for?(EyeColor is Lowercase)");
             var inputOccupation = prompt("What Occupation are you searching for?(Occupation is Lowercase)");
-            // then pass that info to the respective function.
-            return result;
+            var traitResult = getTraitsInfo
+            return traitResult;
             break;
         default:
             gatherSearchInfo();
@@ -295,20 +295,16 @@ function initSearch(){
 	
 }
 
-function getPersonInfo(inputFirstName, inputLastName, array){
+function getTraitsObjects(inputAge, inputEyeColor, inputOccupation, array){
 	
-var firstNameArray = array.filter(checkFirstName);
-	var result = firstNameArray.filter(checkLastName);
+	var result = array.filter(CheckTraits);
 	alert(result.toString());
 	return result;
 
-	function checkFirstName(object){
-	return object.firstName == inputFirstName ;
+	function checkTraits(object){
+	return object.age == inputAge && object.Occupation == inputOccupation && object.eyeColor == inputEyeColor;
 }
 
-function checkLastName(object){
-	return object.lastName == inputLastName;
-}
 }
 
 function makeArray(){
@@ -325,13 +321,6 @@ return firstArray;
 }
 
 
-//function checkFirstName(object, inputFirstName){
-	//return object.firstName = inputFirstName ;
-//}
-
-//function checkLastName(inputLastName){
-	//return lastName = inputLastName;
-//}
 
 initSearch();
 
