@@ -265,20 +265,28 @@ var dataObject = {
 	}
 };
 
-function gatherSearchInfo(array){
-    var typeOfSearch = prompt("What Type of Search would you like to run? A direct search by Name? (Type Name) or A filtered search by trait, age and Occupation? (Type Filter)");
+function initSearch(){
+    //alert("Welcome to the FBI's personal persons database");
+	var fullArray = makeArray();
+	gatherSearchInfo(fullArray);
+	
+}
+function getMenu(fullArray){
+    var typeOfSearch = "Name"//prompt("What Type of Search would you like to run? A direct search by Name? (Type Name) or A filtered search by trait, age and Occupation? (Type Filter)");
     switch (typeOfSearch){
         case "Name":
-            var inputFirstName = prompt("What is the First Name of the individual you are searching for? (Name is Case Sensitive)");
-            var inputLastName = prompt("What is the Last Name Of the Individual you are searching for?(Name is Case Sensitive)");
-			var personResult = getPersonInfo(inputFirstName, inputLastName, array);
-            return personResult;
+            var inputFirstName = "Regina" //prompt("What is the First Name of the individual you are searching for? (Name is Case Sensitive)");
+            var inputLastName = "Madden" //prompt("What is the Last Name Of the Individual you are searching for?(Name is Case Sensitive)");
+			var personResult = getPersonInfo(inputFirstName, inputLastName, fullArray);
+			displayNamesOnly(personResult);
+			typeOfSecondarySearch(personResult, fullArray);
+			
             break;
         case "Filter":
             var inputAge = prompt("What Age Would you like to search for?");
             var inputEyeColor = prompt("What EyeColor are you searching for?(EyeColor is Lowercase)");
             var inputOccupation = prompt("What Occupation are you searching for?(Occupation is Lowercase)");
-            var traitResult = getTraitsInfo
+            var traitResult = getTraitsObjects(inputAge, inputEyeColor, inputOccupation, fullArray)
             return traitResult;
             break;
         default:
@@ -287,18 +295,92 @@ function gatherSearchInfo(array){
             
     }
 }
+function typeOfSecondarySearch(personInfo, fullArray){
+	var secondarySearch = prompt("What do you want to find out about " + personInfo[0].firstName.toString() + "? (Type Bio, Descendents, Immediate Family, Next of Kin(Types are case-sensitive)");
+    switch (secondarySearch){
+        case "Bio":
+			displayProfiles(personInfo);
+		break;
+		case "Descendents":
+			var descendents = getDescendents(personInfo, fullArray);
+			displayNames(descendents);
+		break;
+		case "Immediate Family":
+		break;
+		case "Next of Kin":
+		break;
+		default:
+		typeOfSecondarySearch(personInfo);
+		break;
+			var personResult = GetPersonInfo(inputFirstName, inputLastName, fullArray);
+			display(personResult);
+			typeOfSecondarySearch(personResult);
 
-function initSearch(){
-    alert("Welcome to the FBI's personal persons database");
-	var array = makeArray();
-	gatherSearchInfo(array);
+	}
+}
+
+function getDescendents(personInfo, fullArray){
+	var result = fullArray.filter(checkDescendents);
+	
+	
+	function checkParents(object){
+		
+		var id = personInfo.id;
+	}
 	
 }
-function getPersonInfo(inputFirstName, inputLastName, array){
-	
-var result = array.filter(checkName);
+function getTraitsObjects(inputAge, inputEyeColor, inputOccupation, fullArray){
+    
+    var result = fullArray.filter(CheckTraits);
+    return result;
 
-	alert(result.toString());
+    function checkTraits(object){
+    return object.age == inputAge && object.Occupation == inputOccupation && object.eyeColor == inputEyeColor;
+}
+
+}
+
+function getAge(dob)
+{
+	var dobValue = [];
+	if (dob != null){
+	dobValue = dob.split('/');
+	born = new Date(dobValue[2]-1900, dobValue[0]-1, dobValue[1]);
+	today = new Date();
+	var age =  Math.floor((today.getTime() - born.getTime()) / (365.25 * 24 * 60 * 60 * 1000));
+	
+		return age;
+	}
+	
+}
+
+function displayNamesOnly(info){
+	var listOfNames = "";
+	info.forEach(function(object)
+	{
+	listOfNames = listOfNames + object["firstName"] + " " + object["lastName"] + ", ";
+	});
+	listOfNames = listOfNames.substring(0,listOfNames.length - 2);
+	alert("Search yields " + listOfNames);
+	
+}
+function displayProfiles(info){
+	var listOfProfiles = "";
+	info.forEach(function(object)
+	{	
+		listOfProfiles = listOfProfiles + object["firstName"]  + " " +  object["lastName"] + " Age: " + getAge(object["dob"]) + " Gender: " +  object["gender"]  + " Height: " + object["height"] + " Weight: " +  object["weight"] + " Eye Color: " +  object["eyeColor"] + " Occupation: " +  object["occupation"] + ", ";
+	}
+	);
+	listOfProfiles = listOfProfiles.substring(0,listOfProfiles.length - 2);
+	alert("Search yields " + listOfProfiles);
+		
+}
+
+
+
+function getPersonInfo(inputFirstName, inputLastName, fullArray){
+	
+	var result = fullArray.filter(checkName);
 	return result;
 
 	function checkName(object){

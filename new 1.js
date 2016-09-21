@@ -277,7 +277,7 @@ printAllToConsole(dataObject);
 */
 
 function initSearch(){
-	alert("Welcome to the FBI's personal persons database");
+
 	var arra= []
 	var = 0;
 	for(var key in dataObject)
@@ -304,6 +304,7 @@ function initSearch(){
 			var age = prompt("What Age Would you like to search for?");
 			var eyeColor = prompt("What EyeColor are you searching for?(EyeColor is Lowercase)");
 			var occupation = prompt("What Occupation are you searching for?(Occupation is Lowercase)");
+			
 			// then pass that info to the respective function.
 			return result;
 			break;
