@@ -265,59 +265,75 @@ var dataObject = {
 	}
 };
 
-function gatherSearchInfo(array){
-    var typeOfSearch = prompt("What Type of Search would you like to run? A direct search by Name? (Type Name) or A filtered search by trait, age and Occupation? (Type Filter)");
-    switch (typeOfSearch){
-        case "Name":
-            var inputFirstName = prompt("What is the First Name of the individual you are searching for? (Name is Case Sensitive)");
-            var inputLastName = prompt("What is the Last Name Of the Individual you are searching for?(Name is Case Sensitive)");
-			var personResult = getPersonInfo(inputFirstName, inputLastName, array);
-            return personResult;
-            break;
-        case "Filter":
-            var inputAge = prompt("What Age Would you like to search for?");
-            var inputEyeColor = prompt("What EyeColor are you searching for?(EyeColor is Lowercase)");
-            var inputOccupation = prompt("What Occupation are you searching for?(Occupation is Lowercase)");
-            var traitResult = getTraitsInfo
-            return traitResult;
-            break;
-        default:
-            gatherSearchInfo();
-            break;
-            
-    }
+/*  Remove this from your final submission
+function printAllToConsole(dataObj){
+	for (var key in dataObj) {
+		if (dataObj.hasOwnProperty(key)) {
+			console.log(key + " -> " + JSON.stringify(dataObj[key]));
+		}
+	}
 }
+printAllToConsole(dataObject);
+*/
 
 function initSearch(){
-    alert("Welcome to the FBI's personal persons database");
-	var array = makeArray();
-	gatherSearchInfo(array);
-	
-}
-function getPersonInfo(inputFirstName, inputLastName, array){
-	
-var result = array.filter(checkName);
+	alert("Welcome to the FBI's personal persons database");
+	var arra= []
+	var = 0;
+	for(var key in dataObject)
+	{
+		a[i] = key
 
-	alert(result.toString());
+		i++
+		gatherSearchInfo(A[])
+		
+	}
+}
+
+
+ 	function gatherSearchInfo()
+	var typeOfSearch = prompt("What Type of Search would you like to run? A direct search by Name? (Type Name) or A filtered search by trait, age and Occupation? (Type Filter)");
+	switch (typeOfSearch){
+		case "Name":
+			var lastName = prompt("What is the First Name of the individual you are searching for? (Name is Case Sensitive)");
+			var firstName = prompt("What is the Last Name Of the Individual you are searching for?(Name is Case Sensitive)");
+			var result = getPersonInfo(firstName, lastName);
+			return result;
+			break;
+		case "Filter":
+			var age = prompt("What Age Would you like to search for?");
+			var eyeColor = prompt("What EyeColor are you searching for?(EyeColor is Lowercase)");
+			var occupation = prompt("What Occupation are you searching for?(Occupation is Lowercase)");
+			// then pass that info to the respective function.
+			return result;
+			break;
+		default:
+			gatherSearchInfo();
+			break;
+			
+	}}
+
+
+
+
+function responder(results){
+	// results may be a list of strings, an object, or a single string. 
+	alert(results);
+}
+
+function getPersonInfo(firstname, lastname){
+	var result = 
+	array.arra.filtere)
 	return result;
-
-	function checkName(object){
-	return object.firstName == inputFirstName && object.lastName == inputLastName;
-}
 }
 
-
-function makeArray(){
-
-var firstArray = [];
-
-Object.keys(dataObject).map(function(id, index){
-	firstArray[index] = id;
-	firstArray[index] = dataObject[id];
-});
-
-return firstArray;
-
+function getFamily(){
+	// return list of names of immediate family members
 }
+
+// there will be much more here, and some of the code above will certainly change
 
 initSearch();
+var result = gatherSearchInfo();
+responder(result);
+window.close();
