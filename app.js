@@ -268,7 +268,7 @@ var dataObject = {
 function initSearch(){
     //alert("Welcome to the FBI's personal persons database");
 	var fullArray = makeArray();
-	gatherSearchInfo(fullArray);
+	getMenu(fullArray);
 	
 }
 function getMenu(fullArray){
@@ -296,39 +296,35 @@ function getMenu(fullArray){
     }
 }
 function typeOfSecondarySearch(personInfo, fullArray){
-	var secondarySearch = prompt("What do you want to find out about " + personInfo[0].firstName.toString() + "? (Type Bio, Descendents, Immediate Family, Next of Kin(Types are case-sensitive)");
+	var secondarySearch = "Descendents" //prompt("What do you want to find out about " + personInfo[0].firstName.toString() + "? (Type Bio, Descendents, Immediate Family, Next of Kin(Types are case-sensitive)");
     switch (secondarySearch){
         case "Bio":
 			displayProfiles(personInfo);
 		break;
 		case "Descendents":
 			var descendents = getDescendents(personInfo, fullArray);
-			displayNames(descendents);
+			displayNamesOnly(descendents);
 		break;
 		case "Immediate Family":
+		
 		break;
 		case "Next of Kin":
 		break;
 		default:
 		typeOfSecondarySearch(personInfo);
 		break;
-			var personResult = GetPersonInfo(inputFirstName, inputLastName, fullArray);
-			display(personResult);
-			typeOfSecondarySearch(personResult);
-
 	}
 }
 
 function getDescendents(personInfo, fullArray){
-	var result = fullArray.filter(checkDescendents);
+	var id = personInfo.id;
+	var result = fullArray.filter(checkForParentage);
 	
-	
-	function checkParents(object){
-		
-		var id = personInfo.id;
+	function checkForParentage(object){	
+		return 0 < object.parents.toString().indexOf(id)
+	}
 	}
 	
-}
 function getTraitsObjects(inputAge, inputEyeColor, inputOccupation, fullArray){
     
     var result = fullArray.filter(CheckTraits);
@@ -393,7 +389,7 @@ function makeArray(){
 
 var firstArray = [];
 
-Object.keys(dataObject).map(function(id, index){
+    Object.keys(dataObject).map(function(id, index){
 	firstArray[index] = id;
 	firstArray[index] = dataObject[id];
 });
