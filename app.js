@@ -275,8 +275,8 @@ function getMenu(fullArray){
     var typeOfSearch = "Name"//prompt("What Type of Search would you like to run? A direct search by Name? (Type Name) or A filtered search by trait, age and Occupation? (Type Filter)");
     switch (typeOfSearch){
         case "Name":
-            var inputFirstName = "Regina" //prompt("What is the First Name of the individual you are searching for? (Name is Case Sensitive)");
-            var inputLastName = "Madden" //prompt("What is the Last Name Of the Individual you are searching for?(Name is Case Sensitive)");
+            var inputFirstName = "Jon" //prompt("What is the First Name of the individual you are searching for? (Name is Case Sensitive)");
+            var inputLastName = "Walkens" //prompt("What is the Last Name Of the Individual you are searching for?(Name is Case Sensitive)");
 			var personResult = getPersonInfo(inputFirstName, inputLastName, fullArray);
 			displayNamesOnly(personResult);
 			typeOfSecondarySearch(personResult, fullArray);
@@ -303,7 +303,7 @@ function typeOfSecondarySearch(personInfo, fullArray){
 		break;
 		case "Descendents":
 			var descendents = getDescendents(personInfo, fullArray);
-			displayNamesOnly(descendents);
+			displayNamesOnly(descendents)
 		break;
 		case "Immediate Family":
 		
@@ -316,12 +316,17 @@ function typeOfSecondarySearch(personInfo, fullArray){
 	}
 }
 
+
+function getGrandparent(person)
 function getDescendents(personInfo, fullArray){
-	var id = personInfo.id;
+	var id = personInfo[0].id;
 	var result = fullArray.filter(checkForParentage);
+	return result;
 	
-	function checkForParentage(object){	
-		return 0 < object.parents.toString().indexOf(id)
+	function checkForParentage(object){
+		var parentOneId = object.parents[0]
+		var parentTwoId = object.parents[1];
+		return id == parentOneId || id == parentTwoId;
 	}
 	}
 	
@@ -389,9 +394,10 @@ function makeArray(){
 
 var firstArray = [];
 
-    Object.keys(dataObject).map(function(id, index){
-	firstArray[index] = id;
-	firstArray[index] = dataObject[id];
+
+    Object.keys(dataObject).map(function(id, (index){
+	dataObject[id].id = id;
+	firstArray[index]  = dataObject[id];
 });
 
 return firstArray;
