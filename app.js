@@ -316,14 +316,64 @@ function typeOfSecondarySearch(personInfo, fullArray){
 	}
 }
 
-function getDescendents(personInfo, fullArray){
-	var id = personInfo.id;
-	var result = fullArray.filter(checkForParentage);
+
+
+function getImmediateFamily(personInfo, fullArray){
+	var immediateFamily = [];
+	var descendents = getDescendents(personInfo, fullArray);
+	var siblings = getSiblings(personInfo, fullArray);
+	var parents = getParents(personInfo, fullArray); 
+	var spouse = getSpouse(personInfo, fullArray);
+	var result = immediateFamily.concat(descendents, siblings, parents, spouse);
+	return result;
 	
-	function checkForParentage(object){	
-		return 0 < object.parents.toString().indexOf(id)
 	}
-	}
+function getSpouse(personInfo, fullArray){
+		var spouse = personInfo.currentSpouse;
+		
+		var result = fullArray.filter(checkIfSpouse);
+		return result;
+		
+		function checkIfSpouse(object){
+		return object.id = spouse ;
+		}
+		
+}
+		
+function getDescendents(personInfo, fullArray){
+    var id = personInfo[0].id;
+    var result = fullArray.filter(checkForParentage);
+    return result;
+    
+    function checkForParentage(object){
+        var parentOneId = object.parents[0]
+        var parentTwoId = object.parents[1];
+        return id == parentOneId || id == parentTwoId;
+    }
+    }
+		
+function getParents(personInfo, fullArray){
+		var parentOneId = personInfo[0].parent;
+		var parentTwoId = personInfo[1].parents;
+		
+		var result = fullArray.filter(checkIfParents);
+		return result;
+		
+		function checkIfParents(object){
+			return object.id == parentOneId || object.id == parentTwoId;
+		}
+}
+function getSiblings(personInfo, fullArray){
+		var parentOneId = personInfo.parents[0];
+		var parentTwoId = personInfo.parents[1];
+	
+		var result = fullArray.filter(checkForSiblings);
+		return result;
+		
+		function checkForSiblings(object){	
+		return parentOneId == object.parents[0] || parentTwoId == object.parents[1];
+}
+}
 	
 function getTraitsObjects(inputAge, inputEyeColor, inputOccupation, fullArray){
     
@@ -333,7 +383,6 @@ function getTraitsObjects(inputAge, inputEyeColor, inputOccupation, fullArray){
     function checkTraits(object){
     return object.age == inputAge && object.Occupation == inputOccupation && object.eyeColor == inputEyeColor;
 }
-
 }
 
 function getAge(dob)
