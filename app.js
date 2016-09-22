@@ -339,7 +339,8 @@ function getSpouse(personInfo, fullArray){
 		}
 		
 }
-		
+
+	
 function getDescendents(personInfo, fullArray){
     var id = personInfo[0].id;
     var result = fullArray.filter(checkForParentage);
@@ -351,17 +352,43 @@ function getDescendents(personInfo, fullArray){
         return id == parentOneId || id == parentTwoId;
     }
     }
+
+function getGrandparents(personInfo, fullArray){
 		
-function getParents(personInfo, fullArray){
-		var parentOneId = personInfo[0].parent;
-		var parentTwoId = personInfo[1].parents;
+		var parents = getParents(personInfo, fullArray);
+		
+		var grandparentsOne = getParents(parents[0], fullArray);
+		var grandparentsTwo = getParents(parents[1], fullArray);
+		
+		var grandparents = grandparentsOne.concat(grandparentsTwo);
+		return grandparents;
+}
+
+function getFamilyTree(personInfo, fullArray)
+{
+	
+}
+
+function getGreatGrandparents(personInfo, fullArray){
+	var parents = getParents(personInfo, fullArray);
+	var grandparents = getGrandparents(parents, fullArray);
+	return grandparents;
+}
+
+	
+function getParents(personInfoArray, fullArray){
+		
+		var parentOneId = object.parents[0];
+		var parentTwoId = object.parents[1];
 		
 		var result = fullArray.filter(checkIfParents);
 		return result;
 		
+				
 		function checkIfParents(object){
-			return object.id == parentOneId || object.id == parentTwoId;
+		return object.id == parentOneId || object.id == parentTwoId;
 		}
+}
 }
 function getSiblings(personInfo, fullArray){
 		var parentOneId = personInfo.parents[0];
