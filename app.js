@@ -273,11 +273,11 @@ function initSearch(){
 }
 
 function getMenu(fullArray){
-    var typeOfSearch = "filter"//"Name"//prompt("What Type of Search would you like to run? A direct search by Name? (Type Name) or A filtered search by trait(Type , age and Occupation or a direct filter by one attribute?(Type Filter)");
+    var typeOfSearch = "Name"//prompt("What Type of Search would you like to run? A direct search by Name? (Type Name) or A filtered search by trait(Type , age and Occupation or a direct filter by one attribute?(Type Filter)");
     switch (typeOfSearch.toLowerCase()){
         case "name":
-            var inputFirstName = prompt("What is the First Name of the individual you are searching for? (Name is Case Sensitive)");
-            var inputLastName = prompt("What is the Last Name Of the Individual you are searching for?(Name is Case Sensitive)");
+            var inputFirstName = "Joy"//prompt("What is the First Name of the individual you are searching for? (Name is Case Sensitive)");
+            var inputLastName = "Madden"//prompt("What is the Last Name Of the Individual you are searching for?(Name is Case Sensitive)");
 			var personResult = getPersonInfo(inputFirstName, inputLastName, fullArray);
 			displayNamesOnly(personResult);
 			typeOfSecondaryDirectSearch(personResult, fullArray);
@@ -293,14 +293,15 @@ function getMenu(fullArray){
     }
 }
 function typeOfSecondaryDirectSearch(personInfo, fullArray){
-	var secondarySearch = prompt("What do you want to find out about " + personInfo[0].firstName.toString() + "? (Type Bio, Descendents, Immediate Family, Next of Kin(Types are case-sensitive)");
+	var secondarySearch = "descendents"//prompt("What do you want to find out about " + personInfo[0].firstName.toString() + "? (Type Bio, Descendents, Immediate Family, Next of Kin(Types are case-sensitive)");
     switch (secondarySearch.toLowerCase()){
         case "bio":
 			displayProfiles(personInfo);
 		break;
 		case "descendents":
-			var descendents = getDescendents(personInfo, fullArray);
-			displayNamesOnly(descendents)
+			var descendents = [];
+			descendents = getDescendents(personInfo, fullArray, false);
+			displayNamesOnly(descendents);
 		break;
 		case "immediate Family":
 		
@@ -314,7 +315,7 @@ function typeOfSecondaryDirectSearch(personInfo, fullArray){
 }
 function performSecondaryFilterSearch(fullArray)
 {
-			var filterBy = "Age-Range, Occupationn"; //prompt("What would you like to filter by?  Age, Age-Range, Height, Weight, Occupation, or EyeColor? (Select a max of 5 separated with a ,)")
+			var filterBy = prompt("What would you like to filter by?  Age, Age-Range, Height, Weight, Occupation, or EyeColor? (Select a max of 5 separated with a ,)")
 			filterBy = filterBy.replace(/\s+/g, '')
 			var filterByArray = filterBy.split(',');
 			var choices = evaluateFilterBy(filterByArray);
@@ -382,7 +383,7 @@ function searchByFilters(choicesArray, fullArray){
 		break;
 		
 		case "age-range":
-		var ageRangeInput = "22-75"//prompt("Please specify age-range in numerical years with a dash(x-y) where x is less than y.");
+		var ageRangeInput = prompt("Please specify age-range in numerical years with a dash(x-y) where x is less than y.");
 		filteredArray = getAgeRangeFilteredArray(ageRangeInput, filteredArray);
 		break;
 		
@@ -489,7 +490,7 @@ function getChildren(personInfo, fullArray){
         return id == parentOneId || id == parentTwoId;
     }
     }
-	
+}	
 function getGrandChildren(personInfo, fullArray){
 	var id = personInfo[0].id;
 	
@@ -527,24 +528,30 @@ function getGreatGrandparents(personInfo, fullArray){
 	return grandparents;
 }
 
-function getDescendents(personInfoArray, fullArray){
-	var totalResult = [];
+function getDescendents(personInfoArray, fullArray, trigger){
+
 	var result =[];
+	
 	for (var item in personInfoArray){
-    result = fullArray.filter(checkForParentage);
-    
-    function checkForParentage(object){
+		
+    var id = personInfoArray[item].id;
+	result = fullArray.filter(checkForParentage);
+	 
+	function checkForParentage(object){
         var parentOneId = object.parents[0]
         var parentTwoId = object.parents[1];
         return id == parentOneId || id == parentTwoId;
     }
 
 	}
-  	if (result == null){
-		return totalResult;}
+  	if (result.length == 0){
+		return personInfoArray;}
 	else {
-		totalResult = totalResult.concat(result);
-		getDescendents(totalResult, fullArray);
+			personInfoArray = personInfoArray.concat(result);
+			if (trigger == false){
+			personInfoArray.splice(0, 1);
+			}
+			getDescendents(personInfoArray, fullArray, true);
 	}
 }
 
