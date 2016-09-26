@@ -343,7 +343,7 @@ function typeOfSecondaryDirectSearch(personInfoArray, fullArray){
 		break;
 		case "descendents":
 			var descendents = [];
-			descendents = getDescendents(personInfoArray, 2);
+			descendents = getDescendents(personInfoArray, fullArray);
 			displayNamesOnly(descendents);
 		break;
 		case "immediatefamily":
@@ -591,7 +591,7 @@ function getChildren(personInfoArray, fullArray){
 	for (var item in personInfoArray){
 	var id = personInfoArray[item].id;
     result = fullArray.filter(checkForParentage);
-   
+   return result;
     
     function checkForParentage(object){
         var parentOneId = object.parents[0];
@@ -640,7 +640,6 @@ if (generationOfChildren.length != 0){
 		descendents = descendents.concat(generationOfChildren);
 		getDescendents(generationOfChildren, fullArray, descendents);
 	}
-else 
 	return descendents;
 	
 }
