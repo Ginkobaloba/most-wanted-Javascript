@@ -346,11 +346,11 @@ function typeOfSecondaryDirectSearch(personInfoArray, fullArray){
 			descendents = getDescendents(personInfoArray, 2);
 			displayNamesOnly(descendents);
 		break;
-		case "immediate family":
+		case "immediatefamily":
 			var immediateFamily = getImmediateFamily(personInfoArray, fullArray);
 			displayNamesOnly(immediateFamily);
 		break;
-		case "next of kin":
+		case "nextofkin":
 			var nextOfKin = findNextOfKin(personInfoArray, fullArray);
 			displayNamesOnly(nextOfKin);
 		break;
