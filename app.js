@@ -321,7 +321,7 @@ function getMenu(fullArray){
 
 function getCorrectPerson(fullArray){
 	var personResult = [];
-	var firstName = "Joy" //prompt("What is the First Name of the individual you are searching for? (Name is Case Sensitive)");
+	var firstName = "Mader" //prompt("What is the First Name of the individual you are searching for? (Name is Case Sensitive)");
     var lastName = "Madden" //prompt("What is the Last Name Of the Individual you are searching for? (Name is Case Sensitive)");
 	firstName = firstName.replace(/\s+/g, '');
 	lastName = lastName.replace(/\s+/g, '');
@@ -665,7 +665,7 @@ function getdescendants(personInfoArray, fullArray, descendants = []){
 		
 if (generationOfChildren.length != 0){
 		descendants = descendants.concat(generationOfChildren);
-		getdescendants(generationOfChildren, fullArray, descendants);
+		return getdescendants(generationOfChildren, fullArray, descendants);
 	}
 	return descendants;
 	
