@@ -201,7 +201,7 @@ var dataObject = {
 	  "eyeColor": "brown",
 	  "occupation": "nurse",
 	  "parents": [693243224, 888201200],
-	  "currentSpouse": null 
+	  "currentSpouse": null
 	},
 	"819168108" : {
 	  "firstName": "Hana",
@@ -294,7 +294,7 @@ function promptRunDecision(){
 		}
 	}
 function getMenu(fullArray){
-    var typeOfSearch = "filter"//prompt("What Type of Search would you like to run? A direct search by Name? (Type Name) or A filtered search by trait or combination of traits?(Type Filter)");
+    var typeOfSearch = "name" //prompt("What Type of Search would you like to run? A direct search by Name? (Type Name) or A filtered search by trait or combination of traits?(Type Filter)");
     if (typeOfSearch != null){
 	switch (typeOfSearch.toLowerCase().replace(/\s+/g, '')){
         case "name":        
@@ -321,8 +321,8 @@ function getMenu(fullArray){
 
 function getCorrectPerson(fullArray){
 	var personResult = [];
-	var firstName = prompt("What is the First Name of the individual you are searching for? (Name is Case Sensitive)");
-    var lastName = prompt("What is the Last Name Of the Individual you are searching for? (Name is Case Sensitive)");
+	var firstName = "Joy" //prompt("What is the First Name of the individual you are searching for? (Name is Case Sensitive)");
+    var lastName = "Madden" //prompt("What is the Last Name Of the Individual you are searching for? (Name is Case Sensitive)");
 	firstName = firstName.replace(/\s+/g, '');
 	lastName = lastName.replace(/\s+/g, '');
 	
@@ -354,17 +354,17 @@ function checkIfNameExists(firstName, lastName, fullArray){
 	
 }
 function typeOfSecondaryDirectSearch(personInfoArray, fullArray){
-	var secondarySearch = prompt("What do you want to find out about " + personInfoArray[0].firstName.toString() + "? (Type Bio, Descendents, Immediate Family, Next of Kin(Types are case-sensitive)");
+	var secondarySearch = "descendants" //prompt("What do you want to find out about " + personInfoArray[0].firstName.toString() + "? (Type Bio, descendants, Immediate Family, Next of Kin(Types are case-sensitive)");
     
 	if (secondarySearch != null){
 	switch (secondarySearch.toLowerCase().replace(/\s+/g, '')){
         case "bio":
 			displayProfiles(personInfoArray);
 		break;
-		case "descendents":
-			var descendents = [];
-			descendents = getDescendents(personInfoArray, fullArray);
-			displayNamesOnly(descendents);
+		case "descendants":
+			var descendants = [];
+			descendants = getdescendants(personInfoArray, fullArray);
+			displayNamesOnly(descendants);
 		break;
 		case "immediatefamily":
 			var immediateFamily = getImmediateFamily(personInfoArray, fullArray);
@@ -658,16 +658,16 @@ function getParents(personInfoArray, fullArray){
 		
 
 		
-function getDescendents(personInfoArray, fullArray, descendents = []){
+function getdescendants(personInfoArray, fullArray, descendants = []){
 	
 	var generationOfChildren = getChildren(personInfoArray, fullArray);
 		
 		
 if (generationOfChildren.length != 0){
-		descendents = descendents.concat(generationOfChildren);
-		getDescendents(generationOfChildren, fullArray, descendents);
+		descendants = descendants.concat(generationOfChildren);
+		getdescendants(generationOfChildren, fullArray, descendants);
 	}
-	return descendents;
+	return descendants;
 	
 }
 
