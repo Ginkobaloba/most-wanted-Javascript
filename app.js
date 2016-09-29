@@ -273,6 +273,7 @@ function initSearch(){
 }
 function promptRunDecision(){
 	var decision = prompt("Would you like to continue? Type 'search' to continue searching or type 'exit' to close the program.");
+	if (decision != null){
 	switch (decision.toLowerCase().replace(/\s+/g, '')){
 		case "search":
 		initSearch();
@@ -287,9 +288,15 @@ function promptRunDecision(){
 		promptRunDecision();
 	}
 	}
+	else {
+		alert("I'm sorry, you must enter a response.");
+		promptRunDecision();
+		}
+	}
 function getMenu(fullArray){
-    var typeOfSearch = prompt("What Type of Search would you like to run? A direct search by Name? (Type Name) or A filtered search by trait or combination of traits?(Type Filter)");
-    switch (typeOfSearch.toLowerCase().replace(/\s+/g, '')){
+    var typeOfSearch = "filter"//prompt("What Type of Search would you like to run? A direct search by Name? (Type Name) or A filtered search by trait or combination of traits?(Type Filter)");
+    if (typeOfSearch != null){
+	switch (typeOfSearch.toLowerCase().replace(/\s+/g, '')){
         case "name":        
 			personResult = getCorrectPerson(fullArray);
 			displayNamesOnly(personResult);
@@ -305,6 +312,11 @@ function getMenu(fullArray){
             break;
             
     }
+	}
+	else {
+		alert("I'm sorry, you must enter a response.");
+		getMenu(fullArray);
+		}
 }
 
 function getCorrectPerson(fullArray){
@@ -314,6 +326,7 @@ function getCorrectPerson(fullArray){
 	firstName = firstName.replace(/\s+/g, '');
 	lastName = lastName.replace(/\s+/g, '');
 	
+	if (firstName != null || lastName != null){
 	
 	if (checkIfNameExists(firstName, lastName, fullArray) == false){
 	personResult = getPersonInfo(firstName, lastName, fullArray);	
@@ -322,8 +335,13 @@ function getCorrectPerson(fullArray){
 		alert("Oops, we couldn't find anyone by that name in our system. Click Ok to try again.");
 		getCorrectPerson(fullArray);
 	}
-	return personResult;		
-	
+	}
+		
+	else {
+		alert("I'm sorry, you must enter a response.");
+		getCorrectPerson(fullArray);
+		}
+	return personResult;
 }
 
 function checkIfNameExists(firstName, lastName, fullArray){
@@ -337,7 +355,9 @@ function checkIfNameExists(firstName, lastName, fullArray){
 }
 function typeOfSecondaryDirectSearch(personInfoArray, fullArray){
 	var secondarySearch = prompt("What do you want to find out about " + personInfoArray[0].firstName.toString() + "? (Type Bio, Descendents, Immediate Family, Next of Kin(Types are case-sensitive)");
-    switch (secondarySearch.toLowerCase().replace(/\s+/g, '')){
+    
+	if (secondarySearch != null){
+	switch (secondarySearch.toLowerCase().replace(/\s+/g, '')){
         case "bio":
 			displayProfiles(personInfoArray);
 		break;
@@ -359,14 +379,25 @@ function typeOfSecondaryDirectSearch(personInfoArray, fullArray){
 			typeOfSecondaryDirectSearch(personInfoArray);
 		break;
 	}
+	}
+	else {
+		alert("I'm sorry, you must enter a response.");
+		typeOfSecondaryDirectSearch(personInfoArray, fullArray);
+		}
 }
 function performSecondaryFilterSearch(fullArray){
-		var filterBy = prompt("What would you like to filter by?  Age, Age-Range, Height, Weight, Occupation, or EyeColor? (Select a max of 5 separated with a ,)")
+	var filterBy = prompt("What would you like to filter by?  Age, Age-Range, Height, Weight, Occupation, or EyeColor? (Select a max of 5 separated with a ,)")
+	if (filterBy != null){
 		filterBy = filterBy.replace(/\s+/g, '');
 		var filterByArray = filterBy.split(',');
 		var choices = evaluateFilterBy(filterByArray);
 		var searchResult = searchByFilters(choices, fullArray);
 		displayNamesOnly(searchResult);
+		}
+	else {
+		alert("I'm sorry, you must enter a response.");
+		performSecondaryFilterSearch(fullArray);
+		}
 			
 }
 function getPersonInfo(inputFirstName, inputLastName, fullArray){
@@ -417,7 +448,7 @@ function evaluateFilterBy(filterByArray){
 	
 function findNextOfKin(personInfoArray, fullArray){
 	var spouse = getSpouse(personInfoArray, fullArray);
-	var nextOfKin = [];
+	var nextOfKin = spouse;
 	var children = [];
 	var parents = [];
 	var grandparents = [];
@@ -428,46 +459,42 @@ function findNextOfKin(personInfoArray, fullArray){
 	var greatGrandparents = [];
 
 	
-	if (spouse.length == 0){
+	if (nextOfKin.length == 0){
 		children = getChildren(personInfoArray, fullArray);
 		nextOfKin[0] = children[0];
 	}
-	else if (children.length == 0){
+	else if (nextOfKin.length == 0){
 		parents = getParents(personInfoArray, fullArray);
 		nextOfKin[0] = parents[0];
 	}
-	else if (parents.length == 0){
+	else if (nextOfKin.length == 0){
 		siblings = getSiblings(personInfoArray, fullArray);
 		nextOfKin[0] = silbings[0];
 	}
-	else if (siblings.length == 0){
+	else if (nextOfKin.length == 0){
 		grandchildren = getChildren(children, fullArray);
 		nextOfKin[0] = grandchildren[0];
 	}
-	else if (grandchildren.length == 0){
+	else if (nextOfKin.length == 0){
 		grandparents = getParent(parents, fullArray);
 		nextOfKin[0] = grandparents[0];
 	}	
-	else if (grandparents.length == 0){
+	else if (nextOfKin.length == 0){
 		niecesAndNephews = getChildren(siblings, fullArray);
 		nextOfKin[0] = niecesAndNephews[0];
 	}	
-	else if (niecesAndNephews.length == 0){
+	else if (nextOfKin.length == 0){
 		auntsAndUncles = getSiblings(parents, fullArray);
 		nextOfKin[0] = auntsAndUncles[0];
 	}
-	else if (auntsAndUncles.length == 0){
+	else if (nextOfKin.length == 0){
 		greatGrandchildren = getChildren(grandchildren, fullArray);
 		nextOfKin[0] = greatGrandchildren[0];
 	}
-	else if (greatGrandchildren.length == 0){
+	else if (nextOfKin.length == 0){
 		greatGrandparents = getParents(grandparents, fullArray);
 		nextOfKin[0] = greatGrandparents[0];
-	}
-	else {
-		nextOfKin[0] = null;
-	}
-	
+	}	
 	return nextOfKin;	
 }
 
@@ -480,7 +507,7 @@ function searchByFilters(choicesArray, fullArray){
 	switch(choicesArray[item].toLowerCase()){
 		case "age":
 		var ageInput = prompt("Please specify age in numerical years.");
-			filteredArray = getFiltered("age", ageInput, filteredArray);
+			filteredArray = getAgeFilteredArray(ageInput, filteredArray);
 		break;
 		
 		case "age-range":
@@ -574,12 +601,12 @@ function getImmediateFamily(personInfoArray, fullArray){
 	}
 	
 function getSpouse(personInfoArray, fullArray){
-		var spouse = personInfoArray.currentSpouse;
+		var spouse = personInfoArray[0].currentSpouse;
 		var result = fullArray.filter(checkIfSpouse);
 		return result;
 		
 		function checkIfSpouse(object){
-		return object.id = spouse ;
+		return object.id == spouse ;
 		}
 		
 }
@@ -700,26 +727,32 @@ function calculateAge(dob){
 
 function displayNamesOnly(info){
 	var listOfNames = "";
-	info.forEach(function(object)
-	{
-	listOfNames = listOfNames + object["firstName"] + " " + object["lastName"] + ", ";
+	info.forEach(function(object){
+		listOfNames = listOfNames + object["firstName"] + " " + object["lastName"] + ", ";
 	});
-
-
-	listOfNames = listOfNames.substring(0,listOfNames.length - 2);
-	alert("Search yields " + listOfNames);
 	
+	if (listOfNames!=""){
+		listOfNames = listOfNames.substring(0,listOfNames.length - 2);
+		alert("Search yields " + listOfNames);
+	}
+	else{
+		alert("I'm sorry but your search yielded no results, are you sure you entered in the correct criteria.");
+	}
 }
 function displayProfiles(info){
 	var listOfProfiles = "";
-	info.forEach(function(object)
-	{	
+	info.forEach(function(object){	
 		listOfProfiles = listOfProfiles + object["firstName"]  + " " +  object["lastName"] + " Age: " + calculateAge(object["dob"]) + " Gender: " +  object["gender"]  + " Height: " + object["height"] + " Weight: " +  object["weight"] + " Eye Color: " +  object["eyeColor"] + " Occupation: " +  object["occupation"] + ", ";
 	}
 	);
-	listOfProfiles = listOfProfiles.substring(0,listOfProfiles.length - 2);
-	alert("Search yields " + listOfProfiles);
-		
+	
+	if (listOfProfiles != ""){
+		listOfProfiles = listOfProfiles.substring(0,listOfProfiles.length - 2);
+		alert("Search yields " + listOfProfiles);
+	}
+	else{
+		alert("I'm sorry but your search yielded no results, are you sure you entered in the correct criteria.");
+	}	
 }
 
 
