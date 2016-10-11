@@ -294,7 +294,7 @@ function promptRunDecision(){
 		}
 	}
 function getMenu(fullArray){
-    var typeOfSearch = "name" //prompt("What Type of Search would you like to run? A direct search by Name? (Type Name) or A filtered search by trait or combination of traits?(Type Filter)");
+    var typeOfSearch = prompt("What Type of Search would you like to run? A direct search by Name? (Type Name) or A filtered search by trait or combination of traits?(Type Filter)");
     if (typeOfSearch != null){
 	switch (typeOfSearch.toLowerCase().replace(/\s+/g, '')){
         case "name":        
@@ -321,8 +321,8 @@ function getMenu(fullArray){
 
 function getCorrectPerson(fullArray){
 	var personResult = [];
-	var firstName = "Mader" //prompt("What is the First Name of the individual you are searching for? (Name is Case Sensitive)");
-    var lastName = "Madden" //prompt("What is the Last Name Of the Individual you are searching for? (Name is Case Sensitive)");
+	var firstName = prompt("What is the First Name of the individual you are searching for? (Name is Case Sensitive)");
+    var lastName = prompt("What is the Last Name Of the Individual you are searching for? (Name is Case Sensitive)");
 	firstName = firstName.replace(/\s+/g, '');
 	lastName = lastName.replace(/\s+/g, '');
 	
@@ -354,7 +354,7 @@ function checkIfNameExists(firstName, lastName, fullArray){
 	
 }
 function typeOfSecondaryDirectSearch(personInfoArray, fullArray){
-	var secondarySearch = "descendants" //prompt("What do you want to find out about " + personInfoArray[0].firstName.toString() + "? (Type Bio, descendants, Immediate Family, Next of Kin(Types are case-sensitive)");
+	var secondarySearch = prompt("What do you want to find out about " + personInfoArray[0].firstName.toString() + "? (Type Bio, descendants, Immediate Family, Next of Kin(Types are case-sensitive)");
     
 	if (secondarySearch != null){
 	switch (secondarySearch.toLowerCase().replace(/\s+/g, '')){
